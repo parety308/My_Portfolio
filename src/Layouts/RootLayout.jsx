@@ -5,6 +5,7 @@ import About from '../component/About/About';
 import Skills from '../component/Skills/Skills';
 import Projects from '../component/Projects/Projects';
 import Contacts from '../component/Contacts/Contacts';
+import Education from '../component/Education/Education';
 
 const RootLayout = () => {
     return (
@@ -12,6 +13,7 @@ const RootLayout = () => {
             <Navbar />
             <Banner />
             <About />
+            <Education />
             <Skills />
             <Projects />
             <Contacts />

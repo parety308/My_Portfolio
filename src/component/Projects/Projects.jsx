@@ -9,14 +9,19 @@ const Projects = () => {
   const [loading, setLoading] = useState(true);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Mouse spotlight effect
+  // Scroll lock when modal open
   useEffect(() => {
-    const handleMouseMove = (e) => setMousePosition({ x: e.clientX, y: e.clientY });
+    document.body.style.overflow = selectedProject ? "hidden" : "auto";
+  }, [selectedProject]);
+
+  // Mouse spotlight (soft cyan)
+  useEffect(() => {
+    const handleMouseMove = (e) =>
+      setMousePosition({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Load projects
   useEffect(() => {
     fetch("/porfolioData.json")
       .then((res) => res.json())
@@ -25,64 +30,72 @@ const Projects = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  // Get tech options dynamically
   const techOptions = useMemo(() => {
     const allTech = projects.flatMap((p) => p.techStack);
     return ["All", ...new Set(allTech)];
   }, [projects]);
 
-  // Filtered projects based on search & tech
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
-      const matchesSearch = project.name.toLowerCase().includes(search.toLowerCase());
-      const matchesTech = activeTech === "All" || project.techStack.includes(activeTech);
+      const matchesSearch = project.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const matchesTech =
+        activeTech === "All" || project.techStack.includes(activeTech);
       return matchesSearch && matchesTech;
     });
   }, [projects, search, activeTech]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black text-center py-20 text-gray-400">
+      <div className="min-h-screen bg-[#0b0f19] text-center py-20 text-gray-400">
         Loading projects...
       </div>
     );
   }
 
   return (
-    <div id="projects" className="relative min-h-screen text-white overflow-hidden bg-[#0b0f19] px-4 py-16">
-      {/* Animated Background */}
-      <div className="fixed inset-0 -z-20 bg-gradient-to-br from-purple-900 via-black to-indigo-900 animate-pulse opacity-30" />
-      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_#1e1b4b,_#0f172a_40%)]" />
-      
-      {/* Mouse Spotlight */}
+    <section
+      id="projects"
+      className="relative min-h-screen bg-[#0b0f19] text-white px-6 py-24 overflow-hidden"
+    >
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0f172a] to-[#111827] -z-20" />
+
+      {/* Cyan spotlight */}
       <div
-        className="pointer-events-none fixed inset-0 -z-10"
+        className="pointer-events-none absolute inset-0 -z-10"
         style={{
-          background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(139,92,246,0.15), transparent 80%)`,
+          background: `radial-gradient(500px at ${mousePosition.x}px ${mousePosition.y}px, rgba(34,211,238,0.08), transparent 80%)`,
         }}
       />
 
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <h2 className="text-4xl font-bold mb-12 
-          text-transparent bg-clip-text 
-          bg-gradient-to-r from-cyan-400 to-purple-500">
-          Featured Work
-        </h2>
+        <div className="mb-16">
+          <p className="text-cyan-400 uppercase tracking-[0.3em] text-sm mb-4">
+            Portfolio
+          </p>
+          <h2 className="text-4xl md:text-5xl font-bold text-cyan-400">
+            Featured Work
+          </h2>
+        </div>
 
         {/* Search + Filter */}
-        <div className="flex flex-col md:flex-row gap-4 mb-12">
+        <div className="flex flex-col md:flex-row gap-4 mb-16">
           <input
             type="text"
             placeholder="Search projects..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 px-4 py-3 rounded-xl bg-[#111827] border border-purple-500/20 focus:ring-2 focus:ring-cyan-500 outline-none"
+            className="flex-1 px-5 py-3 rounded-xl bg-white/5 border border-white/10 
+              focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none transition"
           />
+
           <select
             value={activeTech}
             onChange={(e) => setActiveTech(e.target.value)}
-            className="px-4 py-3 rounded-xl bg-[#111827] border border-purple-500/20 focus:ring-2 focus:ring-purple-500 outline-none"
+            className="px-4 py-3 rounded-xl bg-[#111827] border border-cyan-400/20 focus:ring-2 focus:ring-cyan-400 outline-none"
           >
             {techOptions.map((tech, i) => (
               <option key={i}>{tech}</option>
@@ -90,139 +103,149 @@ const Projects = () => {
           </select>
         </div>
 
-        {/* Project Grid */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {/* Grid */}
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project) => (
             <motion.div
               key={project.id}
-              whileHover={{ scale: 1.05 }}
-              className="group bg-[#0f172a]/80 backdrop-blur-xl 
-                border border-purple-500/20 
-                rounded-2xl p-4 cursor-pointer 
-                shadow-lg hover:shadow-purple-500/50 
-                hover:border-purple-400 transition duration-500"
+              whileHover={{ y: -10 }}
+              transition={{ type: "spring", stiffness: 200 }}
+              className="group bg-[#0f172a]/80 backdrop-blur-xl border border-cyan-400/20 rounded-2xl p-4 cursor-pointer shadow-lg hover:shadow-cyan-400/50 hover:border-cyan-400 transition duration-500"
               onClick={() => setSelectedProject(project)}
             >
-              {/* Project Image */}
+              {/* FULL WIDTH IMAGE */}
               {project.image && (
-                <img
-                  src={project.image}
-                  alt={project.name}
-                  className="w-full h-48 object-cover rounded-xl mb-4 border border-purple-500/20"
-                />
+                <div className="relative overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    className="w-full h-56 object-cover 
+                      transition-transform duration-700 
+                      group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-cyan-500/0 
+                    group-hover:bg-cyan-500/10 transition duration-500"
+                  />
+                </div>
               )}
 
-              <h3 className="text-xl font-semibold mb-2 
-                text-transparent bg-clip-text 
-                bg-gradient-to-r from-cyan-400 to-purple-500">
-                {project.name}
-              </h3>
-
-              <p className="text-gray-400 text-sm mb-4">{project.shortDescription}</p>
-
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.techStack.slice(0, 4).map((tech, i) => (
-                  <span
-                    key={i}
-                    className="text-xs px-3 py-1 rounded-full 
-                      bg-purple-500/10 text-cyan-300 
-                      border border-cyan-400/30 
-                      group-hover:shadow-cyan-400/40 transition"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {/* Neon Arrow Button */}
-              <motion.div
-                className="mt-2 text-cyan-400 font-bold text-lg flex items-center gap-2 group-hover:text-purple-400"
-                whileHover={{ x: 6 }}
-              >
-                View Project <span className="text-2xl animate-pulse">→</span>
-              </motion.div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Modal */}
-        <AnimatePresence>
-          {selectedProject && (
-            <motion.div
-              className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedProject(null)}
-            >
-              <motion.div
-                className="bg-[#0f172a] border border-purple-500/30 
-                  max-w-3xl w-full rounded-2xl p-8 
-                  relative max-h-[90vh] overflow-y-auto shadow-2xl"
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0.8 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  className="absolute top-4 right-4 text-gray-400 text-xl"
-                  onClick={() => setSelectedProject(null)}
-                >
-                  ✕
-                </button>
-
-                <h3 className="text-2xl font-bold mb-4 
-                  text-transparent bg-clip-text 
-                  bg-gradient-to-r from-cyan-400 to-purple-500">
-                  {selectedProject.name}
+              {/* CONTENT */}
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-3 text-white">
+                  {project.name}
                 </h3>
 
-                <p className="mb-6 text-gray-300">{selectedProject.overview}</p>
+                <p className="text-gray-400 text-sm mb-5 line-clamp-3">
+                  {project.shortDescription}
+                </p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {selectedProject.techStack.map((tech, i) => (
+                  {project.techStack.slice(0, 3).map((tech, i) => (
                     <span
                       key={i}
                       className="text-xs px-3 py-1 rounded-full 
-                        bg-purple-500/10 text-purple-300 
-                        border border-purple-500/30"
+                        bg-cyan-500/10 text-cyan-300 
+                        border border-cyan-400/20"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex gap-4">
-                  <a
-                    href={selectedProject.liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-2 rounded-lg 
-                      bg-gradient-to-r from-cyan-500 to-purple-600 
-                      hover:scale-105 transition transform 
-                      shadow-lg hover:shadow-cyan-500/40"
+                <div className="flex items-center justify-between">
+                  <span className="text-cyan-400 text-sm font-medium">
+                    View Details
+                  </span>
+                  <motion.span
+                    className="text-cyan-400 text-lg"
+                    whileHover={{ x: 5 }}
                   >
-                    Live Demo
-                  </a>
-
-                  <a
-                    href={selectedProject.githubLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-2 rounded-lg 
-                      bg-gradient-to-r from-purple-600 to-pink-600 
-                      hover:scale-105 transition transform 
-                      shadow-lg hover:shadow-purple-500/40"
-                  >
-                    GitHub
-                  </a>
+                    →
+                  </motion.span>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
-          )}
-        </AnimatePresence>
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* MODAL */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            className="fixed inset-0 bg-black/70 backdrop-blur-md 
+              flex items-center justify-center p-6 z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedProject(null)}
+          >
+            <motion.div
+              className="bg-[#0f172a] border border-white/10 
+                max-w-3xl w-full rounded-2xl p-8 
+                relative shadow-2xl shadow-cyan-500/20"
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 60 }}
+              transition={{ type: "spring", damping: 20 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="absolute top-4 right-4 text-gray-400 hover:text-white"
+                onClick={() => setSelectedProject(null)}
+              >
+                ✕
+              </button>
+
+              <h3 className="text-2xl font-bold mb-4 text-cyan-400">
+                {selectedProject.name}
+              </h3>
+
+              <p className="mb-6 text-gray-300">
+                {selectedProject.overview}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                {selectedProject.techStack.map((tech, i) => (
+                  <span
+                    key={i}
+                    className="text-xs px-3 py-1 rounded-full 
+                      bg-cyan-500/10 text-cyan-300 
+                      border border-cyan-400/20"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex gap-4">
+                <a
+                  href={selectedProject.liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-2 rounded-lg 
+                    bg-cyan-500 hover:bg-cyan-400 
+                    text-black transition shadow-lg shadow-cyan-500/40"
+                >
+                  Live Demo
+                </a>
+
+                <a
+                  href={selectedProject.githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-2 rounded-lg 
+                    border border-cyan-400 text-cyan-400 
+                    hover:bg-cyan-400 hover:text-black transition"
+                >
+                  GitHub
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   );
 };
 

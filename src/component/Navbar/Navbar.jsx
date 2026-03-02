@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const navItems = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
+  { label: "Education", href: "#education" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
@@ -15,21 +16,20 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
+  // Improved Scroll Spy
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 0);
+      setScrolled(window.scrollY > 10);
 
-      const sections = [...navItems.map((item) =>
-        item.href.replace("#", "")
-      )].reverse();
-
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el && el.getBoundingClientRect().top <= 120) {
-          setActiveSection(section);
-          break;
+      navItems.forEach((item) => {
+        const section = document.querySelector(item.href);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            setActiveSection(item.href.replace("#", ""));
+          }
         }
-      }
+      });
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -48,25 +48,26 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-100 ${
-        scrolled
-          ? "backdrop-blur-lg bg-[#0f172a]/80 shadow-lg"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+        ? "backdrop-blur-xl bg-[#0f172a]/80 shadow-lg border-b border-white/10"
+        : "bg-transparent"
+        }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        
+
         {/* Logo */}
-        <a
+        <motion.a
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           href="#home"
           onClick={(e) => {
             e.preventDefault();
             handleClick("#home");
           }}
-          className="text-xl md:text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent"
+          className="text-xl md:text-2xl font-bold bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent"
         >
-          {"<Alex />"}
-        </a>
+          {"< PARVEZ />"}
+        </motion.a>
 
         {/* Desktop Nav */}
         <ul className="hidden md:flex items-center gap-8">
@@ -82,44 +83,44 @@ const Navbar = () => {
                     e.preventDefault();
                     handleClick(item.href);
                   }}
-                  className={`text-sm font-medium transition ${
-                    isActive
-                      ? "text-teal-400"
-                      : "text-gray-300 hover:text-teal-400"
-                  }`}
+                  className={`text-sm font-medium transition-all duration-300 ${isActive
+                    ? "text-teal-400"
+                    : "text-gray-300 hover:text-white"
+                    }`}
                 >
                   {item.label}
                 </a>
 
-                {isActive && (
-                  <motion.div
-                    layoutId="activeIndicator"
-                    className="absolute -bottom-2 left-0 right-0 h-[2px] bg-teal-400"
-                  />
-                )}
+                {/* Animated underline */}
+                <motion.div
+                  layoutId="activeIndicator"
+                  className={`absolute -bottom-2 left-0 right-0 h-[2px] rounded-full ${isActive ? "bg-gradient-to-r from-teal-400 to-cyan-400" : ""
+                    }`}
+                />
               </li>
             );
           })}
         </ul>
 
         {/* Mobile Toggle */}
-        <button
+        <motion.button
+          whileTap={{ scale: 0.9 }}
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-white p-2"
+          className="md:hidden text-white p-2 rounded-md hover:bg-white/10 transition"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        </motion.button>
       </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden backdrop-blur-lg bg-[#0f172a]/95 border-t border-white/10"
+            className="md:hidden backdrop-blur-xl bg-[#0f172a]/95 border-t border-white/10"
           >
             <ul className="flex flex-col px-6 py-6 gap-4">
               {navItems.map((item) => {
@@ -134,11 +135,10 @@ const Navbar = () => {
                         e.preventDefault();
                         handleClick(item.href);
                       }}
-                      className={`block py-3 px-4 rounded-md text-sm font-medium transition ${
-                        isActive
-                          ? "text-teal-400 bg-teal-400/10"
-                          : "text-gray-300 hover:text-white hover:bg-white/5"
-                      }`}
+                      className={`block py-3 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${isActive
+                        ? "text-teal-400 bg-teal-400/10"
+                        : "text-gray-300 hover:text-white hover:bg-white/5"
+                        }`}
                     >
                       {item.label}
                     </a>

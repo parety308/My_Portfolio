@@ -13,16 +13,32 @@ const Skills = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading)
-    return <p className="text-center text-white">Loading...</p>;
+  if (loading) {
+    return (
+      <section className="bg-gradient-to-b from-[#0F172A] to-[#111827] py-28 text-center text-gray-400">
+        Loading skills...
+      </section>
+    );
+  }
 
   return (
     <section
       id="skills"
-      className="bg-[#0B1220] text-white py-24 px-6"
+      className="relative bg-gradient-to-b from-[#0F172A] to-[#111827] 
+      text-white py-28 px-6 overflow-hidden"
     >
-      {/* ✅ SAME CONTAINER AS ABOUT SECTION */}
-      <div className="max-w-7xl mx-auto">
+      {/* Different background pattern from About */}
+      <div className="absolute inset-0 
+        bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)]
+        bg-[size:100%_40px] opacity-20"
+      />
+
+      {/* Cyan glow accent (different from About purple dominance) */}
+      <div className="absolute -top-40 -right-40 w-[500px] h-[500px] 
+        bg-cyan-700/20 rounded-full blur-3xl -z-10"
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10">
 
         {/* Header */}
         <motion.div
@@ -30,14 +46,17 @@ const Skills = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-12"
+          className="mb-16"
         >
-          <p className="text-cyan-400 text-sm tracking-widest uppercase mb-4">
+          <p className="text-cyan-400 text-sm tracking-[0.3em] uppercase mb-4">
             {"</> Skills"}
           </p>
 
-          <h2 className="text-4xl md:text-5xl font-bold">
-            Technologies I work with
+          <h2 className="text-4xl md:text-5xl font-bold 
+            bg-gradient-to-r from-cyan-400 to-teal-400 
+            bg-clip-text text-transparent"
+          >
+            Technologies I Work With
           </h2>
         </motion.div>
 
@@ -47,41 +66,65 @@ const Skills = () => {
             ([category, skills], index) => (
               <motion.div
                 key={category}
-                className="bg-[#111827]/60 backdrop-blur-md border border-white/5 rounded-2xl p-8 shadow-lg"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
                 viewport={{ once: true }}
+                whileHover={{ y: -6 }}
+                className="group relative bg-white/5 backdrop-blur-xl 
+                border border-white/10 rounded-2xl p-8 
+                transition-all duration-300 hover:border-cyan-400/40"
               >
-                <h3 className="text-xl capitalize mb-6 text-cyan-400">
+                {/* Soft hover glow */}
+                <div className="absolute inset-0 rounded-2xl opacity-0 
+                  group-hover:opacity-100 transition duration-500
+                  bg-gradient-to-br from-cyan-500/10 to-teal-500/10 blur-xl"
+                />
+
+                <h3 className="text-xl capitalize mb-8 text-cyan-400 font-semibold">
                   {category}
                 </h3>
 
-                <div className="space-y-5">
+                <div className="space-y-6">
                   {skills.map((skill, i) => (
-                    <div key={i}>
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      viewport={{ once: true }}
+                    >
                       <div className="flex justify-between mb-2 text-sm text-gray-300">
                         <span>{skill.name}</span>
-                        <span>{skill.level}%</span>
+                        <span className="text-cyan-400 font-medium">
+                          {skill.level}%
+                        </span>
                       </div>
 
                       {/* Progress Bar */}
-                      <div className="w-full bg-gray-700 h-2 rounded-full overflow-hidden">
+                      <div className="w-full bg-white/10 h-2.5 rounded-full overflow-hidden">
                         <motion.div
-                          className="h-2 bg-gradient-to-r from-cyan-400 to-teal-500 rounded-full"
+                          className="h-2.5 rounded-full 
+                          bg-gradient-to-r from-cyan-400 to-teal-500 
+                          shadow-lg shadow-cyan-500/30"
                           initial={{ width: 0 }}
                           whileInView={{ width: `${skill.level}%` }}
-                          transition={{ duration: 1 }}
+                          transition={{ duration: 1.2, ease: "easeOut" }}
                           viewport={{ once: true }}
                         />
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </motion.div>
             )
           )}
         </div>
+
+        {/* Optional subtle divider bottom */}
+        <div className="mt-20 w-full h-px 
+          bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"
+        />
       </div>
     </section>
   );
