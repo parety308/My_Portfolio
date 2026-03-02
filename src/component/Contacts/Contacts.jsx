@@ -1,24 +1,63 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useEffect, useState } from "react";
+import emailjs from "@emailjs/browser";
 
 const Contacts = () => {
-    const [personalInfo,setPersonalInfo]=useState({});
-    useEffect(() => {
-  fetch("/porfolioData.json")
-    .then((res) => res.json())
-    .then((data) => {
-      setPersonalInfo(data.personalInfo);
-    })
-    .catch((err) => console.error("JSON Load Error:", err));
-}, []);
+  const [personalInfo, setPersonalInfo] = useState({});
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetch("/porfolioData.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setPersonalInfo(data.personalInfo);
+      })
+      .catch((err) => console.error("JSON Load Error:", err));
+  }, []);
+
+  // Handle Input Change
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Handle Form Submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    emailjs
+      .send(
+        "parvez_Service_Id-2205",    // 🔴 Replace this
+        "template_a8bsu5x",   // 🔴 Replace this
+        formData,
+        "6s9bYA_ODxhrkrlEK"     // 🔴 Replace this
+      )
+      .then(() => {
+        alert("Message sent successfully ✅");
+        setFormData({ name: "", email: "", message: "" });
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Failed to send message ❌");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
-    <section
-      id="contact"
-      className="bg-[#0B1220] text-white py-24 px-6"
-    >
+    <section id="contact" className="bg-[#0B1220] text-white py-24 px-6">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
-        
+
         {/* LEFT SIDE */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -26,7 +65,6 @@ const Contacts = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          {/* Header */}
           <div className="mb-10">
             <p className="text-cyan-400 uppercase tracking-widest text-sm flex items-center gap-2 mb-3">
               <Mail size={18} />
@@ -43,23 +81,17 @@ const Contacts = () => {
             </p>
           </div>
 
-          {/* Contact Info */}
           <div className="space-y-6">
-            
-            {/* Email */}
             <div className="flex items-center gap-4">
               <div className="p-4 rounded-xl bg-cyan-500/10">
                 <Mail className="text-cyan-400" size={22} />
               </div>
               <div>
                 <p className="text-gray-400 text-sm">EMAIL</p>
-                <p className="font-medium">
-                    {personalInfo.email}
-                </p>
+                <p className="font-medium">{personalInfo.email}</p>
               </div>
             </div>
 
-            {/* Phone */}
             <div className="flex items-center gap-4">
               <div className="p-4 rounded-xl bg-cyan-500/10">
                 <Phone className="text-cyan-400" size={22} />
@@ -70,7 +102,6 @@ const Contacts = () => {
               </div>
             </div>
 
-            {/* Location */}
             <div className="flex items-center gap-4">
               <div className="p-4 rounded-xl bg-cyan-500/10">
                 <MapPin className="text-cyan-400" size={22} />
@@ -80,7 +111,6 @@ const Contacts = () => {
                 <p className="font-medium">{personalInfo.location}</p>
               </div>
             </div>
-
           </div>
         </motion.div>
 
@@ -92,51 +122,51 @@ const Contacts = () => {
           viewport={{ once: true }}
           className="bg-[#111827]/60 backdrop-blur-md border border-white/5 rounded-2xl p-8 shadow-xl"
         >
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
 
-            {/* Name */}
             <div>
-              <label className="block mb-2 text-sm text-gray-300">
-                Name
-              </label>
+              <label className="block mb-2 text-sm text-gray-300">Name</label>
               <input
                 type="text"
-                placeholder="Your name"
-                className="w-full bg-[#1F2937] border border-white/5 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-400 transition"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="w-full bg-[#1F2937] border border-white/5 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-400"
               />
             </div>
 
-            {/* Email */}
             <div>
-              <label className="block mb-2 text-sm text-gray-300">
-                Email
-              </label>
+              <label className="block mb-2 text-sm text-gray-300">Email</label>
               <input
                 type="email"
-                placeholder="your@email.com"
-                className="w-full bg-[#1F2937] border border-white/5 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-400 transition"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full bg-[#1F2937] border border-white/5 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-400"
               />
             </div>
 
-            {/* Message */}
             <div>
-              <label className="block mb-2 text-sm text-gray-300">
-                Message
-              </label>
+              <label className="block mb-2 text-sm text-gray-300">Message</label>
               <textarea
                 rows="5"
-                placeholder="Your message..."
-                className="w-full bg-[#1F2937] border border-white/5 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-400 transition resize-none"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                className="w-full bg-[#1F2937] border border-white/5 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-400 resize-none"
               />
             </div>
 
-            {/* Button */}
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-teal-400 text-black font-medium py-4 rounded-xl hover:opacity-90 transition"
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-teal-400 text-black font-medium py-4 rounded-xl hover:opacity-90 transition disabled:opacity-60"
             >
               <Send size={18} />
-              Send Message
+              {loading ? "Sending..." : "Send Message"}
             </button>
 
           </form>
