@@ -1,0 +1,23 @@
+@import "tailwindcss";
+/* Glass effect */
+.glass {
+  backdrop-filter: blur(10px);
+  background: rgba(10, 25, 47, 0.7);
+}
+
+/* Gradient Text */
+.text-gradient {
+  background: linear-gradient(to right, #14b8a6, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Active nav style */
+.nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-link.active {
+  color: #14b8a6;
+}

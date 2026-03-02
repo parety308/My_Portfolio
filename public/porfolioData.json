@@ -1,0 +1,245 @@
+{
+    "personalInfo": {
+        "name": "Md Parvez Hasan",
+        "title": "Full Stack Developer",
+        "tagline": "Crafting elegant digital experiences with modern web technologies",
+        "email": "parvezyesrat17032024@gmail.com",
+        "phone": "01876097788",
+        "location": "Chattogram,Bangladesh",
+        "avatar": "https://i.ibb.co.com/2LczZcR/789.jpg",
+        "resumeUrl": "./Parvez_Web-Developer.pdf",
+        "socials": {
+            "github": "https://github.com/parety308",
+            "linkedin": "https://www.linkedin.com/in/md-parvez-hasan-967729344/",
+            "facebook": "https://www.facebook.com/share/173ddoiXfL/",
+            "twitter": "https://x.com/home"
+        }
+    },
+    "aboutContent": {
+        "paragraphs": [
+            "I'm a passionate Full Stack Developer with 4+ years of experience building modern web applications. My journey into programming started during college when I built my first website — and I've been hooked ever since.",
+            "I specialize in creating performant, accessible, and visually stunning applications using React, Node.js, and cloud technologies. I believe great software is born from the intersection of clean code and thoughtful design.",
+            "When I'm not coding, you'll find me exploring open-source projects, writing technical articles, or hiking in the mountains. I'm always eager to learn new technologies and collaborate with talented people."
+        ],
+        "highlights": [
+            {
+                "label": "Years Experience",
+                "value": "4+"
+            },
+            {
+                "label": "Projects Completed",
+                "value": "30+"
+            },
+            {
+                "label": "Happy Clients",
+                "value": "20+"
+            },
+            {
+                "label": "Open Source Contributions",
+                "value": "50+"
+            }
+        ]
+    },
+    "skills": {
+        "frontend": [
+            {
+                "name": "React.js",
+                "level": 92
+            },
+            {
+                "name": "TypeScript",
+                "level": 85
+            },
+            {
+                "name": "Tailwind CSS",
+                "level": 90
+            },
+            {
+                "name": "Next.js",
+                "level": 80
+            },
+            {
+                "name": "HTML5 / CSS3",
+                "level": 95
+            }
+        ],
+        "backend": [
+            {
+                "name": "Node.js",
+                "level": 88
+            },
+            {
+                "name": "Express.js",
+                "level": 85
+            },
+            {
+                "name": "REST APIs",
+                "level": 90
+            },
+            {
+                "name": "GraphQL",
+                "level": 72
+            }
+        ],
+        "database": [
+            {
+                "name": "MongoDB",
+                "level": 85
+            },
+            {
+                "name": "PostgreSQL",
+                "level": 78
+            },
+            {
+                "name": "Redis",
+                "level": 65
+            }
+        ],
+        "tools": [
+            {
+                "name": "Git & GitHub",
+                "level": 92
+            },
+            {
+                "name": "Docker",
+                "level": 70
+            },
+            {
+                "name": "AWS / Cloud",
+                "level": 68
+            },
+            {
+                "name": "Figma",
+                "level": 75
+            }
+        ]
+    },
+    "education": [
+        {
+            "degree": "Bachelor of Science in Computer Science",
+            "institution": "University of California, Berkeley",
+            "year": "2018 – 2022",
+            "description": "Graduated with honors. Focused on software engineering, data structures, and web technologies. Led the university's coding club."
+        },
+        {
+            "degree": "Higher Secondary Certificate (HSC)",
+            "institution": "Lincoln High School",
+            "year": "2016 – 2018",
+            "description": "Science stream with Mathematics. Scored top marks in Computer Science and participated in state-level programming competitions."
+        }
+    ],
+    "experience": [
+        {
+            "role": "Senior Frontend Developer",
+            "company": "TechFlow Inc.",
+            "duration": "Jan 2023 – Present",
+            "responsibilities": [
+                "Lead frontend architecture for a SaaS platform serving 50K+ users",
+                "Implemented design system reducing UI inconsistencies by 80%",
+                "Mentored junior developers and conducted code reviews"
+            ]
+        },
+        {
+            "role": "Full Stack Developer",
+            "company": "Digital Craft Studio",
+            "duration": "Jun 2021 – Dec 2022",
+            "responsibilities": [
+                "Built end-to-end web applications using React and Node.js",
+                "Integrated third-party APIs and payment gateways",
+                "Optimized database queries improving performance by 40%"
+            ]
+        },
+        {
+            "role": "Frontend Developer Intern",
+            "company": "StartUp Labs",
+            "duration": "Jan 2021 – May 2021",
+            "responsibilities": [
+                "Developed responsive UI components using React and Tailwind CSS",
+                "Collaborated with designers to translate Figma mockups into code",
+                "Wrote unit tests achieving 85% code coverage"
+            ]
+        }
+    ],
+    "projects": [
+            {
+                "id": "ecommerce-platform",
+                "name": "ShopVista — E-Commerce Platform",
+                "image": "/src/assets/project-2.png",
+                "shortDescription": "A full-featured e-commerce platform with cart management, payment integration, and admin dashboard.",
+                "overview": "ShopVista is a modern e-commerce solution built for small to medium businesses. It features a responsive storefront, real-time inventory management, and a comprehensive admin panel for managing products, orders, and customers.",
+                "techStack": [
+                    "React",
+                    "Node.js",
+                    "MongoDB",
+                    "Stripe",
+                    "Tailwind CSS",
+                    "Redux"
+                ],
+                "liveLink": "https://shopvista-demo.vercel.app",
+                "githubLink": "https://github.com/alexmorgan/shopvista",
+                "challenges": [
+                    "Implementing real-time inventory updates across multiple sessions",
+                    "Building a secure payment flow with Stripe webhooks",
+                    "Optimizing image loading for product catalogs with 1000+ items"
+                ],
+                "improvements": [
+                    "Add AI-powered product recommendations",
+                    "Implement multi-vendor marketplace support",
+                    "Add progressive web app (PWA) capabilities"
+                ]
+            },
+            {
+                "id": "task-manager",
+                "name": "TaskFlow — Project Management App",
+                "image": "/src/assets/project-2.png",
+                "shortDescription": "A Kanban-style project management tool with real-time collaboration and drag-and-drop functionality.",
+                "overview": "TaskFlow helps teams organize their work with an intuitive Kanban board interface. Features include real-time updates, file attachments, deadline tracking, and team collaboration tools.",
+                "techStack": [
+                    "React",
+                    "Node.js",
+                    "Socket.io",
+                    "MongoDB",
+                    "Express",
+                    "DnD Kit"
+                ],
+                "liveLink": "https://taskflow-demo.vercel.app",
+                "githubLink": "https://github.com/alexmorgan/taskflow",
+                "challenges": [
+                    "Implementing smooth drag-and-drop across columns with state persistence",
+                    "Building real-time sync with WebSockets for multi-user editing",
+                    "Handling offline mode with local storage and sync on reconnect"
+                ],
+                "improvements": [
+                    "Add Gantt chart view for timeline visualization",
+                    "Integrate with Slack and GitHub for notifications",
+                    "Build a mobile app using React Native"
+                ]
+            },
+            {
+                "id": "weather-app",
+                "name": "SkyCast — Weather Forecast App",
+                "image": "/src/assets/project-2.png",
+                "shortDescription": "A beautiful weather application with 7-day forecasts, location search, and interactive weather maps.",
+                "overview": "SkyCast delivers accurate weather data with a stunning visual interface. Users can search any location, view hourly and weekly forecasts, and explore interactive weather maps with radar data.",
+                "techStack": [
+                    "React",
+                    "OpenWeather API",
+                    "Chart.js",
+                    "Tailwind CSS",
+                    "Geolocation API"
+                ],
+                "liveLink": "https://skycast-demo.vercel.app",
+                "githubLink": "https://github.com/alexmorgan/skycast",
+                "challenges": [
+                    "Parsing and normalizing data from multiple weather API endpoints",
+                    "Creating responsive and animated weather visualizations",
+                    "Implementing accurate geolocation with fallback mechanisms"
+                ],
+                "improvements": [
+                    "Add severe weather alerts and push notifications",
+                    "Implement historical weather data comparison",
+                    "Add air quality index and UV tracking"
+                ]
+            }
+        ]
+}
