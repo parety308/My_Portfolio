@@ -132,9 +132,9 @@
         {
             "id": "ecommerce-platform",
             "name": "LocalChefBazaar — E-Commerce Platform",
-            "image": "/src/assets/project-2.png",
-            "shortDescription": "A full-featured e-commerce platform with cart management, payment integration, and admin dashboard.",
-            "overview": "ShopVista is a modern e-commerce solution built for small to medium businesses. It features a responsive storefront, real-time inventory management, and a comprehensive admin panel for managing products, orders, and customers.",
+            "image": "https://i.postimg.cc/yx1Sd0VY/Chat-GPT-Image-Mar-3-2026-08-34-33-PM.png",
+            "shortDescription": "A role-based food marketplace platform with secure payments, real-time order tracking, and admin management dashboard.",
+            "overview": "LocalChefBazaar is a full-stack marketplace connecting home chefs with customers through a secure and scalable platform. The system supports role-based access for Users, Chefs, and Admins, enabling meal browsing, order management, and platform control. It features secure authentication, Stripe payment integration, real-time order tracking, and a responsive dashboard for managing listings, reviews, and transactions.",
             "techStack": [
                 "React",
                 "Node.js",
@@ -161,9 +161,9 @@
         {
             "id": "delevary-service",
             "name": "ZapShift — Currier Service Platform",
-            "image": "/src/assets/project-2.png",
-            "shortDescription": "A Kanban-style project management tool with real-time collaboration and drag-and-drop functionality.",
-            "overview": "TaskFlow helps teams organize their work with an intuitive Kanban board interface. Features include real-time updates, file attachments, deadline tracking, and team collaboration tools.",
+            "image": "https://i.postimg.cc/SsyK7qHg/Chat-GPT-Image-Mar-3-2026-08-45-22-PM.png",
+            "shortDescription": "A courier service management system with parcel tracking, OTP verification, and role-based operational control.",
+            "overview": "ZapShift is a courier service management platform designed to streamline parcel booking, delivery tracking, and operational control. The system includes separate dashboards for Users, Riders, and Admins, allowing real-time status updates, OTP-based delivery confirmation, warehouse management, and automated routing. Built with secure authentication and payment integration, it ensures efficient logistics handling and transparent service tracking.",
             "techStack": [
                 "React",
                 "Node.js",
@@ -188,10 +188,10 @@
         },
         {
             "id": "real-state",
-            "name": "HomeNest - Real Estate  ",
-            "image": "/src/assets/project-2.png",
-            "shortDescription": "A beautiful weather application with 7-day forecasts, location search, and interactive weather maps.",
-            "overview": "SkyCast delivers accurate weather data with a stunning visual interface. Users can search any location, view hourly and weekly forecasts, and explore interactive weather maps with radar data.",
+            "name": "HomeNest - Real Estate Platform ",
+            "image": "https://i.postimg.cc/66Z9287C/Chat-GPT-Image-Mar-3-2026-08-50-09-PM.png",
+            "shortDescription": "A modern real estate platform with property listings, secure authentication, and role-based management features.",
+            "overview": "HomeNest is a full-stack real estate platform that enables users to browse, search, and manage property listings through a secure and responsive interface. It includes role-based authentication, protected dashboards, and a complete CRUD system for property management. The platform features advanced search, backend sorting, ratings & reviews, and real-time updates, providing a seamless experience for buyers and property managers.",
             "techStack": [
                 "React",
                 "Node Js",
